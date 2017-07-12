@@ -1,0 +1,95 @@
+<!doctype html>
+<!-- ng-app responsavel pelo nome da aplicacao inserida no app.js -->
+<html lang="pt-br" ng-app="meuTreino">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Treino</title>
+    
+
+	<link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap-theme.min.css">
+
+<style>
+	.jumbotron{
+		width: 500px;
+		text-align: center;
+		margin-top: 20px;
+		margin-left: auto;
+		margin-right: auto;
+		height: auto;
+	}
+	.table{
+		margin-top: 20px;
+	}
+	.centro{
+		text-align: center;
+	}
+	.form-control{
+		margin-bottom: 5px;
+	}
+	.selecionado{
+		background-color: yellow;
+	}.
+	.negrito{
+		font-weight: bold;
+	}
+</style>
+
+	<!-- Arquivos do Bootstrap ================================================== 
+	<script src="js/bootstrap/bootstrap.js"></script>
+	 -->
+	<!-- Arquivos do AngularJS ================================================== -->
+	<script src="lib/angular/angular.min.js"></script>
+	<script src="lib/angular/angular-resource.min.js"></script>
+	  
+	<!-- Arquivos da Aplicacao ================================================== -->
+	<script src="js/app.js"></script>
+	<script src="js/controllers.js"></script>
+
+</head>
+<body ng-controller="personalCtrl">
+<div class="jumbotron">
+
+<h3>{{titulo}}</h3>
+
+<hr/>
+
+
+{{personais}}
+<table class="table">
+	<tr>
+		<th  class="centro"></th>
+		<th  class="centro">Nome</th>
+		<th  class="centro">Especialidades</th>
+		<th  class="centro">Bairro</th>
+		<th  class="centro">Gênero</th>
+	</tr>
+	<tr ng-class="{'selecionado negrito': personal.selecionado}" ng-repeat="personal in personais">
+		<td><input type="checkbox" ng-model="personal.selecionado"></td>
+		<td>{{personal.nome}}</td>
+		<td>{{personal.especialidades}}</td>
+		<td>{{personal.bairro}}</td>
+		<td>{{personal.genero.descricao}}</td>
+	</tr>
+</table>
+
+<button ng-click="adicionarPersonal(personal)" class="btn btn-primary btn-block" ng-disabled="!personal.nome || !personal.bairro">Adicionar</button>
+<br/>
+
+<button ng-click="apagarPersonal(personais)" class="btn btn-danger btn-block" >Apagar</button>
+<br/>
+
+Nome: <input type="text" ng-model="personal.nome" class="form-control" >
+
+Especialidades: <input type="text" ng-model="personal.especialidades" class="form-control" >
+
+Bairro: <input type="text" ng-model="personal.bairro" class="form-control" >
+
+Gênero: <select class="form-control"  ng-model="personal.genero" ng-options="genero.descricao for genero in generos" >
+
+
+
+</div>
+</body>
+</html>
