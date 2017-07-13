@@ -29,4 +29,10 @@ angular.module('meuTreino').controller('personalCtrl', function($scope){
 		});
 	};
 
+	$scope.isPersonalSelecionado = function(personais){
+		return personais.some(function(personal){
+			return personal.selecionado;
+		});
+	};
+
 });
