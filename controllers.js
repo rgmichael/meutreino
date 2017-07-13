@@ -35,4 +35,15 @@ angular.module('meuTreino').controller('personalCtrl', function($scope){
 		});
 	};
 
+    $scope.vm = {
+      address: {}
+    };
+    
+
+	$scope.filtra = function(personais){
+		$scope.personais = personais.filter(function (personal){
+			if (personal.bairro == $scope.vm.address.sublocality_level_1) return personal;
+		});
+	};
+
 });
