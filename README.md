@@ -6,6 +6,7 @@ C:\meutreino
     js
       app
       controllers
+      google.js
     lib
       angular
         angular.min
