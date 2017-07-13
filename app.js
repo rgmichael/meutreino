@@ -1,1 +1,1 @@
-angular.module('meuTreino',[]);
+angular.module('meuTreino',['ngAutocomplete']);
