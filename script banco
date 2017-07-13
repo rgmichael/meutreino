@@ -1,0 +1,130 @@
+-- ---
+-- Globals
+-- ---
+
+-- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+-- SET FOREIGN_KEY_CHECKS=0;
+
+-- ---
+-- Table 'bairro'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `bairro`;
+		
+CREATE TABLE `bairro` (
+  `id` INTEGER NOT NULL AUTO_INCREMENT,
+  `id_cidade` INTEGER NULL DEFAULT NULL COMMENT 'cada bairro só pode ter uma cidade',
+  `bairro` VARCHAR(100) NOT NULL,
+  `latitude` DECIMAL NULL DEFAULT NULL,
+  `longitude` DECIMAL NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'usuario'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `usuario`;
+		
+CREATE TABLE `usuario` (
+  `id` INTEGER NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(150) NOT NULL,
+  `perfil` VARCHAR(250) NOT NULL,
+  `tipo` VARCHAR(50) NOT NULL,
+  `login` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`id`),
+KEY ()
+);
+
+-- ---
+-- Table 'especialidade'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `especialidade`;
+		
+CREATE TABLE `especialidade` (
+  `id` INTEGER NOT NULL AUTO_INCREMENT,
+  `descricao` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'usuario_especialidade'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `usuario_especialidade`;
+		
+CREATE TABLE `usuario_especialidade` (
+  `id_especialidade` INTEGER NOT NULL,
+  `id_usuario` INTEGER NOT NULL,
+  PRIMARY KEY ()
+);
+
+-- ---
+-- Table 'usuario_bairro'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `usuario_bairro`;
+		
+CREATE TABLE `usuario_bairro` (
+  `id_usuario` INTEGER NOT NULL,
+  `id_bairro` INTEGER NOT NULL,
+  PRIMARY KEY ()
+);
+
+-- ---
+-- Table 'cidade'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `cidade`;
+		
+CREATE TABLE `cidade` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `nome` VARCHAR(100) NOT NULL,
+  `estado` CHAR NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Foreign Keys 
+-- ---
+
+ALTER TABLE `bairro` ADD FOREIGN KEY (id_cidade) REFERENCES `cidade` (`id`);
+ALTER TABLE `usuario_especialidade` ADD FOREIGN KEY (id_especialidade) REFERENCES `especialidade` (`id`);
+ALTER TABLE `usuario_especialidade` ADD FOREIGN KEY (id_usuario) REFERENCES `usuario` (`id`);
+ALTER TABLE `usuario_bairro` ADD FOREIGN KEY (id_usuario) REFERENCES `usuario` (`id`);
+ALTER TABLE `usuario_bairro` ADD FOREIGN KEY (id_bairro) REFERENCES `bairro` (`id`);
+
+-- ---
+-- Table Properties
+-- ---
+
+-- ALTER TABLE `bairro` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `usuario` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `especialidade` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `usuario_especialidade` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `usuario_bairro` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `cidade` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ---
+-- Test Data
+-- ---
+
+-- INSERT INTO `bairro` (`id`,`id_cidade`,`bairro`,`latitude`,`longitude`) VALUES
+-- ('','','','','');
+-- INSERT INTO `usuario` (`id`,`nome`,`perfil`,`tipo`,`login`) VALUES
+-- ('','','','','');
+-- INSERT INTO `especialidade` (`id`,`descricao`) VALUES
+-- ('','');
+-- INSERT INTO `usuario_especialidade` (`id_especialidade`,`id_usuario`) VALUES
+-- ('','');
+-- INSERT INTO `usuario_bairro` (`id_usuario`,`id_bairro`) VALUES
+-- ('','');
+-- INSERT INTO `cidade` (`id`,`nome`,`estado`) VALUES
+-- ('','','');
