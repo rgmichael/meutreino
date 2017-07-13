@@ -47,6 +47,10 @@
 	<script src="js/app.js"></script>
 	<script src="js/controllers.js"></script>
 
+	<!-- Arquivos pro autocomplete google ================================================== -->
+		<script src="js/google.js"></script>
+	  <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
+
 </head>
 <body ng-controller="personalCtrl">
 <div class="jumbotron">
@@ -88,6 +92,25 @@ Bairro: <input type="text" ng-model="personal.bairro" class="form-control" >
 
 Gênero: <select class="form-control"  ng-model="personal.genero" ng-options="genero.descricao for genero in generos" >
 
+
+
+
+
+<label for="address">Address</label>
+      <input ng-model="vm.address.formattedAddress"
+        ng-autocomplete details="vm.address" id="address" name="address" type="text" />
+
+
+      
+      <hr />
+      
+      <pre>vm.address = {{vm.address | json}}</pre>
+
+
+     bairro: {{vm.address.sublocality_level_1}} 
+
+     <button ng-click="filtra(personais)" class="btn" ng-disabled="!vm.address.sublocality_level_1">Filtrar</button>
+<br/>
 
 
 </div>
