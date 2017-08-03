@@ -46,7 +46,7 @@
 <default>NULL</default><relation table="cidade" row="id" />
 <comment>cada bairro só pode ter uma cidade</comment>
 </row>
-<row name="bairro" null="0" autoincrement="0">
+<row name="nome" null="0" autoincrement="0">
 <datatype>VARCHAR(100)</datatype>
 </row>
 <row name="latitude" null="1" autoincrement="0">
@@ -74,6 +74,12 @@
 </row>
 <row name="login" null="0" autoincrement="0">
 <datatype>VARCHAR(50)</datatype>
+</row>
+<row name="senha" null="0" autoincrement="0">
+<datatype>VARCHAR(20)</datatype>
+</row>
+<row name="ativo" null="0" autoincrement="0">
+<datatype>INT</datatype>
 </row>
 <key type="PRIMARY" name="">
 <part>id</part>
