@@ -1,76 +1,73 @@
--- ---
--- Globals
--- ---
-
------ http://www.devmedia.com.br/exemplo-pratico-regras-e-tipos-de-relacionamentos-sql-server-2008-parte-3/18409
-
--- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
--- SET FOREIGN_KEY_CHECKS=0;
 
 
--- ---
--- Table 'usuario'
--- 
--- ok
-
-DROP TABLE IF EXISTS usuario;
+DROP TABLE IF EXISTS usuarios;
 		
-CREATE TABLE usuario (
+CREATE TABLE usuarios (
 
-  id_usuario int IDENTITY(1,1),
+  id_usuario  int NOT NULL AUTO_INCREMENT,
   nome VARCHAR(250) NOT NULL,
   perfil VARCHAR(150) NOT NULL,
   tipo INT(1) NOT NULL,
   login VARCHAR(50) NOT NULL,
+  email VARCHAR(150) NOT NULL,
   senha VARCHAR(20) NOT NULL,
   ativo INT(1) NOT NULL,
   
-  constraint pk_cliente PRIMARY KEY (id_usuario)
+  PRIMARY KEY (id_usuario)
 );
 
--- ---
--- Table 'bairro'
--- 
--- ---
---ok
+
+
+DROP TABLE IF EXISTS cidades;
+		
+CREATE TABLE cidades (
+
+  id_cidade int NOT NULL AUTO_INCREMENT,
+  nome VARCHAR(150) NOT NULL,
+  estado CHAR(2) NOT NULL,
+  
+  PRIMARY KEY (id_cidade)
+);
+
+
+
+
+
 DROP TABLE IF EXISTS bairro;
 		
-CREATE TABLE bairro (
+CREATE TABLE bairros (
 
-  id_bairro int IDENTITY(1,1) PRIMARY KEY,
-  id_cidade INTEGER NULL DEFAULT NULL COMMENT 'cada bairro só pode ter uma cidade',
+  id_bairro int NOT NULL AUTO_INCREMENT,
+  id_cidade INT NULL DEFAULT NULL COMMENT 'cada bairro só pode ser associado a uma cidade ',
   nome VARCHAR(100) NOT NULL,
   latitude DECIMAL NULL DEFAULT NULL,
   longitude DECIMAL NULL DEFAULT NULL,
   
-  constraint pk_bairro PRIMARY KEY (id_bairro)
+  PRIMARY KEY (id_bairro),
+  constraint pk_bairros_cidade FOREIGN KEY (id_cidade) REFERENCES cidades (id_cidade)
+  
+
 );
 
 
--- ---
--- Table cidade
--- 
--- ---
---ok
 
-DROP TABLE IF EXISTS cidade;
+DROP TABLE IF EXISTS usuario_bairro;
 		
-CREATE TABLE cidade (
-  id INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  nome VARCHAR(100) NOT NULL,
-  estado CHAR NOT NULL,
-  PRIMARY KEY (id)
+CREATE TABLE usuario_bairro (
+  id_usuario INTEGER NOT NULL,
+  id_bairro INTEGER NOT NULL,
+  PRIMARY KEY (id_usuario,id_bairro),
+  constraint pk_usuario_bairro2 FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario),
+  constraint pk_usuario_bairro3 FOREIGN KEY (id_bairro) REFERENCES bairros (id_bairro)
+  
 );
 
--- ---
--- Table 'especialidade'
--- 
--- ---
---ok
 
-DROP TABLE IF EXISTS especialidade;
+
+
+DROP TABLE IF EXISTS especialidades;
 		
-CREATE TABLE especialidade(
+CREATE TABLE especialidades(
   id INTEGER NOT NULL AUTO_INCREMENT,
   descricao VARCHAR(100) NOT NULL,
   PRIMARY KEY (id)
@@ -78,30 +75,13 @@ CREATE TABLE especialidade(
 
 
 
-
--- ---
--- Table 'usuario_especialidade'
--- 
--- ---
-
 DROP TABLE IF EXISTS usuario_especialidade;
 		
 CREATE TABLE usuario_especialidade (
   id_especialidade INTEGER NOT NULL,
-  id_usuario INTEGER NOT NULL
-);
-
--- ---
--- Table 'usuario_bairro'
--- 
--- ---
-
-DROP TABLE IF EXISTS 'usuario_bairro';
-		
-CREATE TABLE 'usuario_bairro' (
-  'id_usuario' INTEGER NOT NULL,
-  'id_bairro' INTEGER NOT NULL,
-  PRIMARY KEY ()
+  id_usuario INTEGER NOT NULL,
+  constraint pk_usuario_bairro2 FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario),
+  constraint pk_usuario_bairro3 FOREIGN KEY (id_especialidade) REFERENCES especialidades (id_especialidade)
 );
 
 
@@ -109,12 +89,23 @@ CREATE TABLE 'usuario_bairro' (
 -- ---
 -- Foreign Keys 
 -- ---
+/*
 
 ALTER TABLE 'bairro' ADD FOREIGN KEY (id_cidade) REFERENCES 'cidade' ('id');
 ALTER TABLE 'usuario_especialidade' ADD FOREIGN KEY (id_especialidade) REFERENCES 'especialidade' ('id');
 ALTER TABLE 'usuario_especialidade' ADD FOREIGN KEY (id_usuario) REFERENCES 'usuario' ('id');
 ALTER TABLE 'usuario_bairro' ADD FOREIGN KEY (id_usuario) REFERENCES 'usuario' ('id');
 ALTER TABLE 'usuario_bairro' ADD FOREIGN KEY (id_bairro) REFERENCES 'bairro' ('id');
+*/
+
+
+
+
+
+
+
+
+
 
 -- ---
 -- Table Properties
