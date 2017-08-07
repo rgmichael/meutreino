@@ -1,3 +1,52 @@
+-- select para bairro+especialidade ok - filtros da tela
+
+SELECT u.* from usuarios u
+
+INNER JOIN usuario_bairro ub ON ub.id_usuario = u.id_usuario
+INNER JOIN bairros b ON ub.id_bairro = b.id_bairro
+
+INNER JOIN usuario_especialidade ue ON ue.id_usuario = u.id_usuario
+INNER JOIN especialidades e ON ue.id_especialidade = e.id_especialidade
+
+where  u.ativo = 1 and u.tipo = 1 
+
+and e.id_especialidade = 2
+and b.nome = 'Lapa' 
+and b.id_cidade = (select id_cidade from cidades where cidades.nome = 'Rio de Janeiro' and cidades.estado = 'RJ')
+
+
+-- primeira query estado/cidade/bairro
+
+SELECT u.* from usuarios u
+
+INNER JOIN usuario_bairro ub ON ub.id_usuario = u.id_usuario
+INNER JOIN bairros b ON ub.id_bairro = b.id_bairro
+
+where  u.ativo = 1 and u.tipo = 1 
+
+and b.nome = 'Lapa' 
+and b.id_cidade = (select id_cidade from cidades where cidades.nome = 'Rio de Janeiro' and cidades.estado = 'RJ')
+
+
+
+----------
+
+--ok 2 com cross join
+SELECT u.*
+FROM  usuario_especialidade ue cross join usuario_bairro ub
+
+INNER JOIN bairros b ON b.id_bairro = ub.id_bairro
+INNER JOIN usuarios u ON u.id_usuario = ub.id_usuario
+INNER JOIN especialidades e ON e.id_especialidade = ue.id_especialidade
+INNER JOIN usuarios u2 ON u2.id_usuario = ue.id_usuario
+
+where e.id_especialidade = 2
+and u.ativo = 1
+and u.tipo = 1
+and b.nome = 'Lapa' 
+and b.id_cidade = (select id_cidade from cidades where cidades.nome = 'Rio de Janeiro' and cidades.estado = 'RJ')
+
+----------------------
 
 
 DROP TABLE IF EXISTS usuarios;
@@ -16,6 +65,7 @@ CREATE TABLE usuarios (
   PRIMARY KEY (id_usuario)
 );
 
+--INSERT INTO `usuarios` (`id_usuario`, `nome`, `perfil`, `tipo`, `login`, `email`, `senha`, `ativo`) VALUES (NULL, 'Michael', 'rgmichael', '1', 'mike', 'rgmichael@gmail.com', '123123', '1'), (NULL, 'Carlos Eduardo', 'cadu', '1', 'cadu', 'cadu@gmail.com', '123123', '1');
 
 
 DROP TABLE IF EXISTS cidades;
@@ -28,6 +78,8 @@ CREATE TABLE cidades (
   
   PRIMARY KEY (id_cidade)
 );
+
+--INSERT INTO `cidades` (`id_cidade`, `nome`, `estado`) VALUES (NULL, 'Rio de Janeiro', 'RJ');
 
 
 
@@ -49,6 +101,7 @@ CREATE TABLE bairros (
 
 );
 
+--INSERT INTO `bairros` (`id_bairro`, `id_cidade`, `nome`, `latitude`, `longitude`) VALUES (NULL, '1', 'Copacabana', NULL, NULL), (NULL, '1', 'Centro', NULL, NULL);
 
 
 DROP TABLE IF EXISTS usuario_bairro;
@@ -62,17 +115,16 @@ CREATE TABLE usuario_bairro (
   
 );
 
-
+--INSERT INTO `usuario_bairro` (`id_usuario`, `id_bairro`) VALUES ('1', '1'), ('2', '2');
 
 
 DROP TABLE IF EXISTS especialidades;
 		
 CREATE TABLE especialidades(
-  id INTEGER NOT NULL AUTO_INCREMENT,
+  id_especialidade INTEGER NOT NULL AUTO_INCREMENT,
   descricao VARCHAR(100) NOT NULL,
-  PRIMARY KEY (id)
-);
-
+  PRIMARY KEY (id_especialidade)
+)
 
 
 DROP TABLE IF EXISTS usuario_especialidade;
